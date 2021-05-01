@@ -1,14 +1,3 @@
-# Build with Docker
-
-```bash
-docker build --tag=annotation-gen --build-arg="API_URL=http://api.annotations.ped.brscan.com.br" .
-```
-
-Then run with:
-```bash
-docker run --restart unless-stopoped -d -p 8080:80 annotation-gen
-```
-
 # Getting Started with Create React App (manual execution and development)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
