@@ -114,6 +114,7 @@ export default function Historico() {
                     <br></br>
                 </div>
             </div>
+            <br></br>
         </div>
     )
 }
