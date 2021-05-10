@@ -10,8 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import { Link as RouterLink} from 'react-router-dom';
-import { isAuthenticated } from '../../auth';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,11 +36,10 @@ export default function ButtonAppBar() {
         setAnchorEl(null);
     };
 
-    function Sair(){
-        var sair = false;
-        isAuthenticated(sair);
-    }
-
+    const Sair = () => {
+        sessionStorage.clear("token");
+        document.location.reload(true);
+    };
     return (
         <div className={classes.root}>
             <AppBar position="static" style={{backgroundColor:"#3d6eff"}}>
@@ -61,12 +58,12 @@ export default function ButtonAppBar() {
                         <MenuItem type="button" {...{key: "Dep", to:"/deposito", component: RouterLink}}>Adicionar Depósito</MenuItem>
                         <MenuItem type="button"{...{key: "Comp", to:"/compras", component: RouterLink}}>Adicionar Compras</MenuItem>
                         <MenuItem type="button"{...{key: "Metas", to:"/metas", component: RouterLink}}>Metas</MenuItem>
-                        <MenuItem type="button" onClick={Sair()}><b>Sair</b></MenuItem>
+                        <MenuItem type="button" onClick={Sair}><b>Sair</b></MenuItem>
                     </Menu>
                     <Typography variant="h6" className={classes.title}>
                         Minhas Finanças
           </Typography>
-                    <Button color="inherit"  type="button"{...{key: "Init", to:"/home", component: RouterLink}}>Início</Button>
+                    <Button color="inherit"  type="button"{...{key: "Init", to:"/", component: RouterLink}}>Início</Button>
                 </Toolbar>
             </AppBar>
         </div>

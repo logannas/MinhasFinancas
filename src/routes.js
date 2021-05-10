@@ -1,7 +1,6 @@
 import React from 'react';
- 
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
-import { isAuthenticated } from './auth';
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from '../src/components/Login/index';
 import Home from '../src/components/Home/index';
 import Deposito from '../src/components/Deposito/index';
@@ -10,36 +9,41 @@ import Metas from '../src/components/Metas/index';
 import AddMetas from '../src/components/AddMetas/index';
 import Cadastro from '../src/components/Cadastro/index';
 import Senha from '../src/components/Senha/index';
+import useToken from './useToken';
 
-const PrivateRoute = ({ component: Component, ...rest}) =>(
-    <Route 
-        {...rest} 
+function PrivateRoute ({ component: Component, ...rest }){
+    const { token, setToken } = useToken();
+    return(
+        <Route
+        {...rest}
         render={props =>
-            isAuthenticated() ? (
+            token ? (
                 <Component {...props} />
             ) : (
                 <div>
-                    {alert("falha de autenticação")}
-                    <Redirect to={{pathname:'/', state:{ from: props.location} }} />
+                    <Login setToken={setToken}></Login>
                 </div>
             )
         }
     />
-)
+    )
+}
 
-const Routes = () =>(
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/cadastro" component={Cadastro} />
-            <Route path="/senha" component={Senha}/>
-            <PrivateRoute path="/home" component={Home} />
-            <PrivateRoute path="/deposito" component={Deposito} />
-            <PrivateRoute path="/compras" component={Compras} />
-            <PrivateRoute path="/metas" component={Metas} />
-            <PrivateRoute path="/addmetas" component={AddMetas} />
-        </Switch>
-    </BrowserRouter>
-);
+
+function Routes() {
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route path="/cadastro" component={Cadastro} />
+                <Route path="/senha" component={Senha} />
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute path="/deposito" component={Deposito} />
+                <PrivateRoute path="/compras" component={Compras} />
+                <PrivateRoute path="/metas" component={Metas} />
+                <PrivateRoute path="/addmetas" component={AddMetas} />
+            </Switch>
+        </BrowserRouter>
+    )
+}
 
 export default Routes;

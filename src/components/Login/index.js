@@ -3,13 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
 import PersonIcon from '@material-ui/icons/Person';
 import LockIcon from '@material-ui/icons/Lock';
+import PropTypes from 'prop-types';
+import LoginUser from '../../services/Login';
 
 
 
 const useStyles = makeStyles(() => ({
     Container: {
-        width: "100vw",
-        height: "70vh",
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
@@ -19,7 +21,7 @@ const useStyles = makeStyles(() => ({
     Box: {
         textAlign: "center",
         borderRadius: "20px",
-        marginTop: "10%",
+        marginTop: "5%",
         width: "30%",
         height: "100%",
         color: "#ffffff",
@@ -57,12 +59,14 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-export default function Login() {
+export default function Login({setToken}) {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const onSubmit = async data => {
         console.log(data);
-        window.location.href = "/home";
+        const token = await LoginUser.loginUser(data);
+        setToken(token)
+        //window.location.href = "/home";
     }
 
     return (
@@ -91,4 +95,8 @@ export default function Login() {
             </div>
         </div>
     )
+}
+
+Login.prototype ={
+    setToken: PropTypes.func.isRequired
 }
