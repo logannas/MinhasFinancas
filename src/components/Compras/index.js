@@ -48,10 +48,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Compras() {
     const classes = useStyles();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
-
-    console.log(watch("example")); // watch input value by passing the name of it
 
     return (
         <div>

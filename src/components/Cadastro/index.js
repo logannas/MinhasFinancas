@@ -6,8 +6,8 @@ import EmailIcon from '@material-ui/icons/Email';
 
 const useStyles = makeStyles(() => ({
     Container: {
-        width: "100vw",
-        height: "70vh",
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     Box: {
         textAlign: "center",
         borderRadius: "20px",
-        marginTop: "10%",
+        marginTop: "5%",
         width: "30%",
         height: "100%",
         color: "#ffffff",
@@ -58,10 +58,9 @@ const useStyles = makeStyles(() => ({
 
 export default function Cadastro() {
     const classes = useStyles();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
 
-    console.log(watch("example")); // watch input value by passing the name of it
 
     return (
         <div>
@@ -85,7 +84,7 @@ export default function Cadastro() {
                         <br></br>
                         {errors.password && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                         <p></p>
-                        <input type="submit" className={classes.button} />
+                        <button type="submit" className={classes.button}>Enviar</button>
                         <p></p>
                         <br></br>
                     </form>
