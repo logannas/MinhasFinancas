@@ -4,8 +4,8 @@ import EmailIcon from '@material-ui/icons/Email';
 
 const useStyles = makeStyles(() => ({
     Container: {
-        width: "100vw",
-        height: "50vh",
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     Box: {
         textAlign: "center",
         borderRadius: "20px",
-        marginTop: "10%",
+        marginTop: "%",
         width: "30%",
         height: "100%",
         color: "#ffffff",
@@ -56,10 +56,8 @@ const useStyles = makeStyles(() => ({
 
 export default function Senha() {
     const classes = useStyles();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
-
-    console.log(watch("example")); // watch input value by passing the name of it
 
     return (
         <div>
@@ -73,7 +71,7 @@ export default function Senha() {
                         <br></br>
                         {errors.email && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                         <p></p>
-                        <input type="submit" className={classes.button} />
+                        <button type="submit" className={classes.button}>Enviar</button>
                         <p></p>
                     </form>
                 </div>
