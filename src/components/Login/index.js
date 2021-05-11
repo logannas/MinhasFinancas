@@ -64,7 +64,8 @@ export default function Login({setToken}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = async data => {
         console.log(data);
-        const token = await LoginUser.loginUser(data);
+        //const token = await LoginUser.loginUser(data);
+        const token = {token: "1234"}
         setToken(token)
         //window.location.href = "/home";
     }

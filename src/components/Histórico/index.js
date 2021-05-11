@@ -50,6 +50,7 @@ export default function Historico() {
     return (
         <div className={classes.Container}>
             <div className={classes.Box}>
+                <br></br>
                 <div className={classes.Header}>
                     <p style={{ width: "50%", fontSize: "25px" }}><FastfoodIcon />&nbsp; Alimentação</p>
                 </div>
