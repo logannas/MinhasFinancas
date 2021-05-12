@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import PersonIcon from '@material-ui/icons/Person';
 import LockIcon from '@material-ui/icons/Lock';
 import EmailIcon from '@material-ui/icons/Email';
+import CreateUser from '../../services/CreateUser';
 
 const useStyles = makeStyles(() => ({
     Container: {
@@ -59,7 +60,14 @@ const useStyles = makeStyles(() => ({
 export default function Cadastro() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = async data => {
+        console.log(data);
+        const token = await CreateUser.createUser(data);
+        console.log(token);
+        //const token = {token: "1234"}
+        //setToken(token)
+        //window.location.href = "/home";
+    }
 
 
     return (
@@ -75,9 +83,9 @@ export default function Cadastro() {
                         {errors.email && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                         <br></br>
                         <PersonIcon style={{ fontSize: "20px" }} />
-                        <input type="text" placeholder="Usuário" className={classes.input} {...register("username", { required: true })} />
+                        <input type="text" placeholder="Usuário" className={classes.input} {...register("name", { required: true })} />
                         <br></br>
-                        {errors.username && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                        {errors.name && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                         <br></br>
                         <LockIcon style={{ fontSize: "20px" }} />
                         <input type="password" placeholder="Senha" min="0" className={classes.input} {...register("password", { required: true })} />

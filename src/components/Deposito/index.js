@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Header/index';
 import { useForm } from "react-hook-form";
-// import useToken from '../../useToken';
+import useToken from '../../useToken';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,8 +52,9 @@ export default function Deposito() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
-    // const { token } = useToken();
+    const { token } = useToken();
 
+    console.log(token);
     return (
         <div>
             <Header />

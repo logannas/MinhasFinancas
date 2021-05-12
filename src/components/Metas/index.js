@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,6 +9,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Link as RouterLink} from 'react-router-dom';
+import GetMetas from '../../services/GetMetas';
+import useToken from '../../useToken';
+
 
 
 const useStyles = makeStyles((theme)=>({
@@ -43,6 +46,17 @@ const useStyles = makeStyles((theme)=>({
 
 export default function OutlinedCard() {
     const classes = useStyles();
+    const { token } = useToken();
+
+
+    useEffect(()=>{
+        async function fetchMyAPI() {
+            const metas = await GetMetas.metasGet(token);
+            console.log(metas)
+          }
+      
+          fetchMyAPI()
+    }, []);
 
     return (
         <div>
