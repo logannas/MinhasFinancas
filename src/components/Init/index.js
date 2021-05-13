@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dashboard from "../../services/Dashboard";
-import useToken from '../../useToken';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -30,12 +29,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Init() {
     const classes = useStyles();
-    const { token } = useToken();
     const [guardado, setGuardado] = useState(0);
     const [gasto, setGasto] = useState(0);
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
+        const sessionToken = JSON.parse(window.sessionStorage.getItem('token'));
+        const token = sessionToken.token;
         const res = Dashboard.deshboardUser(token);
         res.then(res => res.json())
             .then(function (result) {

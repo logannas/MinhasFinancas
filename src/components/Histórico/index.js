@@ -5,8 +5,6 @@ import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import Dashboard from "../../services/Dashboard";
-import useToken from '../../useToken';
-
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -58,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Historico() {
     const classes = useStyles();
-    const { token } = useToken();
     const food = useRef();
     const transport = useRef();
     const [alimentacao, setAlimentacao] = useState([]);
@@ -67,6 +64,8 @@ export default function Historico() {
     const [outros, setOutros] = useState([]);
 
     useEffect(() => {
+        const sessionToken = JSON.parse(window.sessionStorage.getItem('token'));
+        const token = sessionToken.token;
         const res = Dashboard.deshboardUser(token);
         res.then(res => res.json())
             .then(function (result) {
@@ -74,7 +73,7 @@ export default function Historico() {
                 setTransporte(result.transporte);
                 setContas(result.contas);
                 setOutros(result.outros);
-            }).catch(err =>{
+            }).catch(err => {
                 alert(err);
             });
     }, []);

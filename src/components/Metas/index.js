@@ -11,9 +11,6 @@ import AddIcon from '@material-ui/icons/Add';
 import { Link as RouterLink } from 'react-router-dom';
 import GetMetas from '../../services/GetMetas';
 import DelMetasUser from '../../services/DeleteMetas';
-import useToken from '../../useToken';
-
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,11 +45,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Metas() {
     const classes = useStyles();
     const [nome, setNome] = useState([]);
+    const [token, setToken] = useState();
     const [refresh, setRefresh] = useState(false)
-    const { token } = useToken();
-
 
     useEffect(() => {
+        const sessionToken = JSON.parse(window.sessionStorage.getItem('token'));
+        const token = sessionToken.token;
+        setToken(token);
         const res = GetMetas.metasUser(token);
         res.then(res => res.json())
             .then(function (result) {
