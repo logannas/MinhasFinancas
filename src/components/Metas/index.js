@@ -10,8 +10,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Link as RouterLink } from 'react-router-dom';
 import GetMetas from '../../services/GetMetas';
+import DelMetasUser from '../../services/DeleteMetas';
 import useToken from '../../useToken';
-import { set } from 'react-hook-form';
 
 
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         float: "right",
         color: "#3d6eff",
-        fontSize: "small",
+        fontSize: "10px",
     },
     fab: {
         position: 'absolute',
@@ -45,11 +45,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function OutlinedCard() {
+export default function Metas() {
     const classes = useStyles();
     const [nome, setNome] = useState([]);
-    const [data, setData] = useState([]);
-    const [valor, setValor] = useState([]);
+    const [refresh, setRefresh] = useState(false)
     const { token } = useToken();
 
 
@@ -57,26 +56,35 @@ export default function OutlinedCard() {
         const res = GetMetas.metasUser(token);
         res.then(res => res.json())
             .then(function (result) {
-                //console.log(result);
                 var teste = [];
                 for (var obj in result) {
-                    teste.push([result[obj].nome, result[obj].valor, result[obj].dataFinal]);
+                    teste.push([result[obj].nome, result[obj].valor, result[obj].dataFinal, result[obj]._id]);
                 }
                 setNome(teste);
-                //console.log(nome)
-                //setNome(nome + [result.nome, result.valor,result.dataFinal]);
-                //console.log(teste)
-                //setValor(result.valor);
-                //setValor(result.dataFinal);
+            }).catch(err =>{
+                alert(err);
             });
-    }, []);
+    }, [refresh]);
+
+    function handleClick(keyMetas) {
+        const res = DelMetasUser.delMetas(keyMetas, token);
+        res.then(res => res.json())
+            .then(function (result) {
+                console.log(result);
+            }).catch(err =>{
+                alert(err);
+            });
+        setRefresh(!refresh);
+    }
 
     const getMetas = nome.map((item, i) => {
-        console.log(nome[i][0])
+        var date = nome[i][2].replace("T00:00:00.000Z", "");
+        var dateFormat = date.split('-').reverse().join('-');
+
         return (
             <Card className={classes.root} variant="outlined">
                 <CardContent>
-                    <IconButton color="primary" aria-label="upload picture" component="span" className={classes.icon}>
+                    <IconButton color="primary" component="span" className={classes.icon} onClick={(e) => handleClick(nome[i][3])}>
                         <DeleteIcon />
                     </IconButton>
                     <Typography variant="h5" component="h2">
@@ -86,7 +94,7 @@ export default function OutlinedCard() {
                         R$ {nome[i][1]}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
-                        Até dia: {nome[i][2].replace("T00:00:00.000Z", "")}
+                        Até dia: {dateFormat}
                     </Typography>
                 </CardContent>
             </Card>

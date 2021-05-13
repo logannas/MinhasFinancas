@@ -42,16 +42,18 @@ export default function Init() {
                 var objGuardado = 0;
                 var objGasto = 0;
                 for (var obj in result.guardado) {
-                    objGuardado+=result.guardado[obj].valor
+                    objGuardado += result.guardado[obj].valor
                 }
                 for (obj in result.gasto) {
-                    objGasto+=result.gasto[obj].valor
+                    objGasto += result.gasto[obj].valor
                 }
                 var restante = (objGuardado - objGasto);
                 setGuardado(objGuardado.toFixed(2));
                 setGasto(objGasto.toFixed(2));
                 setTotal(restante.toFixed(2));
-;            });
+            }).catch(err => {
+                alert(err);
+            });
     }, []);
 
     return (

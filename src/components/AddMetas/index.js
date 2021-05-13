@@ -63,6 +63,8 @@ export default function AddMetas() {
             else{
                 alert("Meta criada com sucesso");
             }
+        }).catch(err =>{
+            alert(err);
         });
     };
 

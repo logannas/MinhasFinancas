@@ -1,7 +1,7 @@
 import {config} from "../config";
 
 function delMetas(id, token){
-    const res = fetch(`${config.apiUrl}/deposito/${id}`,{
+    const res = fetch(`${config.apiUrl}/metas/${id}`,{
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer '+ token,

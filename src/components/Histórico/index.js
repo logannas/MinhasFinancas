@@ -74,13 +74,18 @@ export default function Historico() {
                 setTransporte(result.transporte);
                 setContas(result.contas);
                 setOutros(result.outros);
+            }).catch(err =>{
+                alert(err);
             });
     }, []);
 
     const getAlimentacao = alimentacao.map((item, i) => {
+        var date = item.date.replace("T00:00:00.000Z", "");
+        var dateFormat = date.split('-').reverse().join('-');
+
         return (
             <div>
-                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p}>{dateFormat}</p>
                 <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
                 <hr></hr>
             </div>
@@ -88,9 +93,12 @@ export default function Historico() {
     });
 
     const getTransporte = transporte.map((item, i) => {
+        var date = item.date.replace("T00:00:00.000Z", "");
+        var dateFormat = date.split('-').reverse().join('-');
+
         return (
             <div>
-                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p}>{dateFormat}</p>
                 <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
                 <hr></hr>
             </div>
@@ -98,9 +106,12 @@ export default function Historico() {
     });
 
     const getContas = contas.map((item, i) => {
+        var date = item.date.replace("T00:00:00.000Z", "");
+        var dateFormat = date.split('-').reverse().join('-');
+
         return (
             <div>
-                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p}>{dateFormat}</p>
                 <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
                 <hr></hr>
             </div>
@@ -108,9 +119,12 @@ export default function Historico() {
     });
 
     const getOutros = outros.map((item, i) => {
+        var date = item.date.replace("T00:00:00.000Z", "");
+        var dateFormat = date.split('-').reverse().join('-');
+
         return (
             <div>
-                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p}>{dateFormat}</p>
                 <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
                 <hr></hr>
             </div>

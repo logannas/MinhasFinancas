@@ -74,6 +74,8 @@ export default function Cadastro() {
             else{
                 alert("Usuário criado com sucesso")
             }
+        }).catch(err =>{
+            alert(err);
         });
     }
 

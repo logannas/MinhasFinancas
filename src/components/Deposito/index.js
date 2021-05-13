@@ -65,6 +65,8 @@ export default function Deposito() {
                 else {
                     alert("Deposito adicionado");
                 }
+            }).catch(err =>{
+                alert(err);
             });
     };
     console.log(token);

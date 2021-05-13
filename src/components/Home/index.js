@@ -29,7 +29,10 @@ export default function Home() {
             </Box>
             <Init></Init>
             <br></br>
+            <br></br>
             <Hist />
+            <br></br>
+            <br></br>
         </div>
     );
 }

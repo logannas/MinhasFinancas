@@ -70,6 +70,8 @@ export default function Login({setToken}) {
                 if(result !== 200){
                     alert("Usuário não encontrado")
                 }
+            }).catch(err =>{
+                alert(err);
             });
 
         res.then(res => res.json())
@@ -78,6 +80,8 @@ export default function Login({setToken}) {
                     var token = {token: `${result.token}`};
                     setToken(token);
                 }
+            }).catch(err =>{
+                alert(err);
             });
     }
 

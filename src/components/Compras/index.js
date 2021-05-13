@@ -65,6 +65,8 @@ export default function Compras() {
             else{
                 alert("Compra adicionada");
             }
+        }).catch(err =>{
+            alert(err);
         });
     };
 
