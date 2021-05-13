@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
+import Swal from 'sweetalert2'
 import SenhaApi from "../../services/Senha";
 
 const useStyles = makeStyles(() => ({
@@ -64,10 +65,18 @@ export default function Senha() {
         res.then(res => res.json())
         .then(function(result){
             if(result.message){
-                alert(result.message)
+                Swal.fire('sucesso', result.message, 'success').then((value) => {
+                    switch (value) {
+                      default:
+                        window.location.href="/";
+                    }
+                  });
+            }
+            else{
+                Swal.fire('erro', 'Usuário não encontrado', 'error');
             }
         }).catch(err =>{
-            alert(err);
+            Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
         });
     }
 

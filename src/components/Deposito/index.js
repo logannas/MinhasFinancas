@@ -3,6 +3,7 @@ import Header from '../Header/index';
 import { useForm } from "react-hook-form";
 import useToken from '../../useToken';
 import DepositoUser from '../../services/Deposito';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -60,16 +61,15 @@ export default function Deposito() {
         res.then(res => res.json())
             .then(function (result) {
                 if (result.message) {
-                    alert(result.message)
+                    Swal.fire('erro', result.message, 'error');
                 }
                 else {
-                    alert("Deposito adicionado");
+                    Swal.fire('sucesso', 'Depósito adicionado com sucesso', 'success')
                 }
-            }).catch(err =>{
-                alert(err);
+            }).catch(err => {
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
     };
-    console.log(token);
     return (
         <div>
             <Header />

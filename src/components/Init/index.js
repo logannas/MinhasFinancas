@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dashboard from "../../services/Dashboard";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -52,7 +53,7 @@ export default function Init() {
                 setGasto(objGasto.toFixed(2));
                 setTotal(restante.toFixed(2));
             }).catch(err => {
-                alert(err);
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
     }, []);
 

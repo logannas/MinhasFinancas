@@ -3,6 +3,7 @@ import Header from '../Header/index';
 import { useForm } from "react-hook-form";
 import AddMetasApi from '../../services/AddMetas';
 import useToken from '../../useToken';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -29,20 +30,20 @@ const useStyles = makeStyles((theme) => ({
         padding: "12px 20px",
         margin: "8px 0",
         boxSizing: "border-box",
-        fontSize:"15px",
+        fontSize: "15px",
     },
-    span:{
-        color:"red",
-        fontSize:"10px",
+    span: {
+        color: "red",
+        fontSize: "10px",
     },
-    button:{
-        width:"100%",
+    button: {
+        width: "100%",
         float: "center",
         padding: "12px 20px",
         margin: "8px 0",
         boxSizing: "border-box",
         backgroundColor: "#3d6eff",
-        fontSize:"20px",
+        fontSize: "20px",
         color: "#ffffff",
     }
 }));
@@ -56,16 +57,16 @@ export default function AddMetas() {
     const onSubmit = data => {
         const res = AddMetasApi.addMetas(data, token);
         res.then(res => res.json())
-        .then(function(result){
-            if(result.message){
-                alert(result.message)
-            }
-            else{
-                alert("Meta criada com sucesso");
-            }
-        }).catch(err =>{
-            alert(err);
-        });
+            .then(function (result) {
+                if (result.message) {
+                    Swal.fire('erro', result.message, 'error');
+                }
+                else {
+                    Swal.fire('sucesso', 'Compra adicionada com sucesso', 'success')
+                }
+            }).catch(err => {
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
+            });
     };
 
 

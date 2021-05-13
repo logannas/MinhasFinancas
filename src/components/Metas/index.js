@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { Link as RouterLink } from 'react-router-dom';
 import GetMetas from '../../services/GetMetas';
 import DelMetasUser from '../../services/DeleteMetas';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,8 +61,8 @@ export default function Metas() {
                     teste.push([result[obj].nome, result[obj].valor, result[obj].dataFinal, result[obj]._id]);
                 }
                 setNome(teste);
-            }).catch(err =>{
-                alert(err);
+            }).catch(err => {
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
     }, [refresh]);
 
@@ -69,9 +70,8 @@ export default function Metas() {
         const res = DelMetasUser.delMetas(keyMetas, token);
         res.then(res => res.json())
             .then(function (result) {
-                console.log(result);
-            }).catch(err =>{
-                alert(err);
+            }).catch(err => {
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
         setRefresh(!refresh);
     }

@@ -5,6 +5,7 @@ import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import Dashboard from "../../services/Dashboard";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -74,7 +75,7 @@ export default function Historico() {
                 setContas(result.contas);
                 setOutros(result.outros);
             }).catch(err => {
-                alert(err);
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
     }, []);
 

@@ -5,7 +5,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import PropTypes from 'prop-types';
 import LoginUser from '../../services/Login';
-
+import Swal from 'sweetalert2';
 
 
 const useStyles = makeStyles(() => ({
@@ -59,29 +59,29 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-export default function Login({setToken}) {
+export default function Login({ setToken }) {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
         const res = LoginUser.loginUser(data);
-        
+
         res.then(res => res.status)
             .then(function (result) {
-                if(result !== 200){
-                    alert("Usuário ou senha não encontrado")
+                if (result !== 200) {
+                    Swal.fire('erro', 'Usuário ou senha não encontrado, tente novamente', 'error');
                 }
-            }).catch(err =>{
-                alert(err);
+            }).catch(err => {
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
 
         res.then(res => res.json())
-            .then(function(result){
-                if(result.token){
-                    var token = {token: `${result.token}`};
+            .then(function (result) {
+                if (result.token) {
+                    var token = { token: `${result.token}` };
                     setToken(token);
                 }
-            }).catch(err =>{
-                alert(err);
+            }).catch(err => {
+                Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
     }
 
@@ -113,6 +113,6 @@ export default function Login({setToken}) {
     )
 }
 
-Login.prototype ={
+Login.prototype = {
     setToken: PropTypes.func.isRequired
 }

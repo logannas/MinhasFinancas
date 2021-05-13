@@ -5,7 +5,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import EmailIcon from '@material-ui/icons/Email';
 import CreateUser from '../../services/CreateUser';
 import useToken from '../../useToken';
-
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(() => ({
     Container: {
@@ -69,13 +69,18 @@ export default function Cadastro() {
         res.then(res => res.json())
         .then(function(result){
             if(result.message){
-                alert(result.message)
+                Swal.fire('erro', result.message, 'error');
             }
             else{
-                alert("Usuário criado com sucesso")
+                Swal.fire('sucesso', 'Usuário criado com sucesso', 'success').then((value) => {
+                    switch (value) {
+                      default:
+                        window.location.href="/";
+                    }
+                  });
             }
         }).catch(err =>{
-            alert(err);
+            Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
         });
     }
 
