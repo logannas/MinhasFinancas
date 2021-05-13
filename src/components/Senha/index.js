@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
-//import SenhaApi from "../../services/Senha";
+import SenhaApi from "../../services/Senha";
 
 const useStyles = makeStyles(() => ({
     Container: {
@@ -60,13 +60,15 @@ export default function Senha() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-        /*const res = SenhaApi.senhaUser(data);
+        const res = SenhaApi.senhaUser(data);
         res.then(res => res.json())
         .then(function(result){
             if(result.message){
                 alert(result.message)
             }
-        });*/
+        }).catch(err =>{
+            alert(err);
+        });
     }
 
     return (

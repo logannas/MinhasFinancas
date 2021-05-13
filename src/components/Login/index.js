@@ -68,7 +68,7 @@ export default function Login({setToken}) {
         res.then(res => res.status)
             .then(function (result) {
                 if(result !== 200){
-                    alert("Usuário não encontrado")
+                    alert("Usuário ou senha não encontrado")
                 }
             }).catch(err =>{
                 alert(err);

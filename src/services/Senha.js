@@ -2,7 +2,7 @@ import {config} from "../config";
 
 function senhaUser(credentials, token){
     const res = fetch(`${config.apiUrl}/auth/resetPassword`,{
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
