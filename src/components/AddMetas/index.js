@@ -87,7 +87,7 @@ export default function AddMetas() {
                             <input type="date" className={classes.input} {...register("dataFinal", { required: true })} />
                             {errors.dataFinal && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <br />
-                            <input type="submit" className={classes.button}/>
+                            <button type="submit" className={classes.button}>Enviar</button>
                         </form>
                     </fieldset>
                 </div>

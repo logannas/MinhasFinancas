@@ -104,7 +104,7 @@ export default function Compras() {
                             <input type="number" step="any" min="0" className={classes.input} {...register("valor", { required: true })} />
                             {errors.valor && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <br />
-                            <input type="submit" className={classes.button}/>
+                            <button type="submit" className={classes.button}>Enviar</button>
                         </form>
                     </fieldset>
                 </div>
