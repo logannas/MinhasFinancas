@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Header/index';
 import { useForm } from "react-hook-form";
+import ComprasUser from "../../services/Compras";
+import useToken from '../../useToken';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -49,7 +51,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Compras() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { token } = useToken();
+
+    const onSubmit = data => {
+        const op={operacao: "compra"}
+        var dataMerge = Object.assign(op, data)
+        const res = ComprasUser.comprasUser(dataMerge, token);
+        res.then(res => res.json())
+        .then(function(result){
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                alert("Compra adicionada");
+            }
+        });
+    };
 
     return (
         <div>
@@ -63,28 +80,27 @@ export default function Compras() {
                             <input type="date" className={classes.input} {...register("date", { required: true })} />
                             {errors.date && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <p>Descrição:  </p>
-                            <input className={classes.input} {...register("description", { required: true })} />
-
-                            {errors.description && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            <input className={classes.input} {...register("descricao", { required: true })} />
+                            {errors.descricao && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <p>Categoria: </p>
-                            <select className={classes.input} {...register("ramo")}>
-                                <option key="food" value="food">
+                            <select className={classes.input} {...register("categoria")}>
+                                <option key="Alimentação" value="Alimentação">
                                     Alimentação
                                     </option>
-                                <option key="transport" value="transport">
+                                <option key="Transporte" value="Transporte">
                                     Transporte
                                     </option>
-                                <option key="ticket" value="ticket">
+                                <option key="Contas" value="Contas">
                                     Contas
                                     </option>
-                                <option key="other" value="other">
+                                <option key="Outros" value="Outros">
                                     Outros
                                     </option>
                             </select>
-                            {errors.ramo && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            {errors.categoria && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <p>Valor da compra R$: </p>
-                            <input type="number" min="0" className={classes.input} {...register("value", { required: true })} />
-                            {errors.value && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            <input type="number" step="any" min="0" className={classes.input} {...register("valor", { required: true })} />
+                            {errors.valor && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <br />
                             <input type="submit" className={classes.button}/>
                         </form>

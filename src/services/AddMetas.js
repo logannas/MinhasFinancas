@@ -1,7 +1,7 @@
 import {config} from "../config";
 
-function depositoUser(credentials, token){
-    const res = fetch(`${config.apiUrl}/deposito`,{
+function addMetas(credentials, token){
+    const res = fetch(`${config.apiUrl}/addmetas`,{
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -13,8 +13,8 @@ function depositoUser(credentials, token){
     return res;
 }
 
-const Deposito_Post ={
-    depositoUser,
+const AddMetas_Post ={
+    addMetas,
 }
 
-export default Deposito_Post;
+export default AddMetas_Post;

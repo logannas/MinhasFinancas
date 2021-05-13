@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Header/index';
 import { useForm } from "react-hook-form";
 import useToken from '../../useToken';
-
+import DepositoUser from '../../services/Deposito';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -29,20 +29,20 @@ const useStyles = makeStyles((theme) => ({
         padding: "12px 20px",
         margin: "8px 0",
         boxSizing: "border-box",
-        fontSize:"15px",
+        fontSize: "15px",
     },
-    span:{
-        color:"red",
-        fontSize:"10px",
+    span: {
+        color: "red",
+        fontSize: "10px",
     },
-    button:{
-        width:"100%",
+    button: {
+        width: "100%",
         float: "center",
         padding: "12px 20px",
         margin: "8px 0",
         boxSizing: "border-box",
         backgroundColor: "#3d6eff",
-        fontSize:"20px",
+        fontSize: "20px",
         color: "#ffffff",
     }
 }));
@@ -51,9 +51,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Deposito() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
     const { token } = useToken();
 
+    const onSubmit = data => {
+        const op = { operacao: "deposito" }
+        var dataMerge = Object.assign(op, data)
+        const res = DepositoUser.depositoUser(dataMerge, token);
+        res.then(res => res.json())
+            .then(function (result) {
+                if (result.message) {
+                    alert(result.message)
+                }
+                else {
+                    alert("Deposito adicionado");
+                }
+            });
+    };
     console.log(token);
     return (
         <div>
@@ -67,10 +80,10 @@ export default function Deposito() {
                             <input type="date" className={classes.input} {...register("date", { required: true })} />
                             {errors.date && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <p>Valor do depósito R$: </p>
-                            <input type="number" min="0" className={classes.input} {...register("value", { required: true })} />
-                            {errors.value && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            <input type="number" step="any" min="0" className={classes.input} {...register("valor", { required: true })} />
+                            {errors.valor && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <br />
-                            <input type="submit" className={classes.button}/>
+                            <input type="submit" className={classes.button} />
                         </form>
                     </fieldset>
                 </div>

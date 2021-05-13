@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Header/index';
 import { useForm } from "react-hook-form";
-
+import AddMetasApi from '../../services/AddMetas';
+import useToken from '../../useToken';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -47,10 +48,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Deposito() {
+export default function AddMetas() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { token } = useToken();
+
+    const onSubmit = data => {
+        const res = AddMetasApi.addMetas(data, token);
+        res.then(res => res.json())
+        .then(function(result){
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                alert("Meta criada com sucesso");
+            }
+        });
+    };
 
 
     return (
@@ -62,11 +76,14 @@ export default function Deposito() {
                         <legend>Metas</legend>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <p>Nome da meta:</p>
-                            <input className={classes.input} {...register("meta", { required: true })} />
-                            {errors.meta && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            <input className={classes.input} {...register("nome", { required: true })} />
+                            {errors.nome && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <p>Valor da meta R$: </p>
-                            <input type="number" min="0" className={classes.input} {...register("value", { required: true })} />
-                            {errors.value && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            <input type="number" min="0" className={classes.input} {...register("valor", { required: true })} />
+                            {errors.valor && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                            <p>Data final para meta:</p>
+                            <input type="date" className={classes.input} {...register("dataFinal", { required: true })} />
+                            {errors.dataFinal && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                             <br />
                             <input type="submit" className={classes.button}/>
                         </form>

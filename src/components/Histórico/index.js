@@ -1,8 +1,12 @@
+import React, { useEffect, useState, useRef } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
+import Dashboard from "../../services/Dashboard";
+import useToken from '../../useToken';
+
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -16,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     Box: {
         width: "60%",
         height: "195px",
-        // background: "#f5f7ff",
         color: "#3d6eff",
         fontSize: "20px",
         fontFamily: "Arial",
@@ -41,12 +44,79 @@ const useStyles = makeStyles((theme) => ({
     i: {
         float: "right",
         fontWeight: "bold",
+        color: "#00000"
+    },
+    p: {
+        fontSize: "15px",
+        color: "#000000",
+    },
+    p1: {
+        color: "#000000",
     }
 }));
 
 
 export default function Historico() {
     const classes = useStyles();
+    const { token } = useToken();
+    const food = useRef();
+    const transport = useRef();
+    const [alimentacao, setAlimentacao] = useState([]);
+    const [transporte, setTransporte] = useState([]);
+    const [contas, setContas] = useState([]);
+    const [outros, setOutros] = useState([]);
+
+    useEffect(() => {
+        const res = Dashboard.deshboardUser(token);
+        res.then(res => res.json())
+            .then(function (result) {
+                setAlimentacao(result.alimentacao);
+                setTransporte(result.transporte);
+                setContas(result.contas);
+                setOutros(result.outros);
+            });
+    }, []);
+
+    const getAlimentacao = alimentacao.map((item, i) => {
+        return (
+            <div>
+                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
+                <hr></hr>
+            </div>
+        )
+    });
+
+    const getTransporte = transporte.map((item, i) => {
+        return (
+            <div>
+                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
+                <hr></hr>
+            </div>
+        )
+    });
+
+    const getContas = contas.map((item, i) => {
+        return (
+            <div>
+                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
+                <hr></hr>
+            </div>
+        )
+    });
+
+    const getOutros = outros.map((item, i) => {
+        return (
+            <div>
+                <p className={classes.p}>{item.date.replace("T00:00:00.000Z", "")}</p>
+                <p className={classes.p1}>{item.descricao}<i className={classes.i}>R$ {item.valor}</i></p>
+                <hr></hr>
+            </div>
+        )
+    });
+
     return (
         <div className={classes.Container}>
             <div className={classes.Box}>
@@ -55,13 +125,8 @@ export default function Historico() {
                     <p style={{ width: "50%", fontSize: "25px" }}><FastfoodIcon />&nbsp; Alimentação</p>
                 </div>
                 <div className={classes.List}>
-                    <div style={{ marginLeft: "1%", marginRight: "1%" }}>
-                        <p>Ifood<i className={classes.i}>R$ 3000,00</i></p>
-                        <hr></hr>
-                        <p>Lanche <i className={classes.i}>R$ 200,00</i></p>
-                        <hr></hr>
-                        <p>Rastaurante <i className={classes.i}>R$ 22111</i></p>
-                        <hr></hr>
+                    <div style={{ marginLeft: "1%", marginRight: "1%" }} ref={food}>
+                        {getAlimentacao}
                         <br></br>
                     </div>
                     <br></br>
@@ -71,13 +136,8 @@ export default function Historico() {
                     <p style={{ width: "50%", fontSize: "25px" }}><AirportShuttleIcon />&nbsp; Transporte</p>
                 </div>
                 <div className={classes.List}>
-                    <div style={{ marginLeft: "1%", marginRight: "1%" }}>
-                        <p>Ifood<i className={classes.i}>R$ 3000,00</i></p>
-                        <hr></hr>
-                        <p>Lanche <i className={classes.i}>R$ 200,00</i></p>
-                        <hr></hr>
-                        <p>Rastaurante <i className={classes.i}>R$ 22111</i></p>
-                        <hr></hr>
+                    <div style={{ marginLeft: "1%", marginRight: "1%" }} ref={transport}>
+                        {getTransporte}
                         <br></br>
                     </div>
                     <br></br>
@@ -88,12 +148,7 @@ export default function Historico() {
                 </div>
                 <div className={classes.List}>
                     <div style={{ marginLeft: "1%", marginRight: "1%" }}>
-                        <p>Ifood<i className={classes.i}>R$ 3000,00</i></p>
-                        <hr></hr>
-                        <p>Lanche <i className={classes.i}>R$ 200,00</i></p>
-                        <hr></hr>
-                        <p>Rastaurante <i className={classes.i}>R$ 22111</i></p>
-                        <hr></hr>
+                        {getContas}
                         <br></br>
                     </div>
                     <br></br>
@@ -104,12 +159,7 @@ export default function Historico() {
                 </div>
                 <div className={classes.List}>
                     <div style={{ marginLeft: "1%", marginRight: "1%" }}>
-                        <p>Ifood<i className={classes.i}>R$ 3000,00</i></p>
-                        <hr></hr>
-                        <p>Lanche <i className={classes.i}>R$ 200,00</i></p>
-                        <hr></hr>
-                        <p>Rastaurante <i className={classes.i}>R$ 22111</i></p>
-                        <hr></hr>
+                        {getOutros}
                         <br></br>
                     </div>
                     <br></br>

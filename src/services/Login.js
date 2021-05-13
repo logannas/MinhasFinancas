@@ -1,9 +1,16 @@
-async function loginUser(credentials){
-    return fetch('http://localhost:8080/login',{
+import {config} from "../config";
+
+function loginUser(credentials){
+    const res = fetch(`${config.apiUrl}/auth/authenticate`,{
         method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(credentials)
     })
-    .then(data => data.json())
+
+    return res;
 }
 
 const Login_Post ={

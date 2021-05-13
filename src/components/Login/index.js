@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from "react-hook-form";
-import PersonIcon from '@material-ui/icons/Person';
+import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import PropTypes from 'prop-types';
 import LoginUser from '../../services/Login';
@@ -62,12 +62,23 @@ const useStyles = makeStyles(() => ({
 export default function Login({setToken}) {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = async data => {
-        console.log(data);
-        //const token = await LoginUser.loginUser(data);
-        const token = {token: "1234"}
-        setToken(token)
-        //window.location.href = "/home";
+    const onSubmit = data => {
+        const res = LoginUser.loginUser(data);
+        
+        res.then(res => res.status)
+            .then(function (result) {
+                if(result !== 200){
+                    alert("Usuário não encontrado")
+                }
+            });
+
+        res.then(res => res.json())
+            .then(function(result){
+                if(result.token){
+                    var token = {token: `${result.token}`};
+                    setToken(token);
+                }
+            });
     }
 
     return (
@@ -76,10 +87,10 @@ export default function Login({setToken}) {
                 <div className={classes.Box}>
                     <h1 style={{ fontSize: "30px" }}>Login</h1>
                     <form onSubmit={handleSubmit(onSubmit)} action="/app">
-                        <PersonIcon style={{ fontSize: "20px" }} />
-                        <input type="text" placeholder="Usuário" className={classes.input} {...register("username", { required: true })} />
+                        <EmailIcon style={{ fontSize: "20px" }} />
+                        <input type="text" placeholder="Email" className={classes.input} {...register("email", { required: true })} />
                         <br></br>
-                        {errors.username && <span className={classes.span}>Esse campo deve ser preenchido</span>}
+                        {errors.email && <span className={classes.span}>Esse campo deve ser preenchido</span>}
                         <br></br>
                         <LockIcon style={{ fontSize: "20px" }} />
                         <input type="password" placeholder="Senha" min="0" className={classes.input} {...register("password", { required: true })} />

@@ -4,6 +4,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import LockIcon from '@material-ui/icons/Lock';
 import EmailIcon from '@material-ui/icons/Email';
 import CreateUser from '../../services/CreateUser';
+import useToken from '../../useToken';
+
 
 const useStyles = makeStyles(() => ({
     Container: {
@@ -60,13 +62,19 @@ const useStyles = makeStyles(() => ({
 export default function Cadastro() {
     const classes = useStyles();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = async data => {
-        console.log(data);
-        const token = await CreateUser.createUser(data);
-        console.log(token);
-        //const token = {token: "1234"}
-        //setToken(token)
-        //window.location.href = "/home";
+    const { token } = useToken();
+
+    const onSubmit = data => {
+        const res = CreateUser.createUser(data, token);
+        res.then(res => res.json())
+        .then(function(result){
+            if(result.message){
+                alert(result.message)
+            }
+            else{
+                alert("Usuário criado com sucesso")
+            }
+        });
     }
 
 

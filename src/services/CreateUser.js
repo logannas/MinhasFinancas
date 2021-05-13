@@ -1,5 +1,7 @@
-async function createUser(credentials){
-    return fetch('http://localhost:3030/auth/register',{
+import {config} from "../config";
+
+function createUser(credentials){
+    const res = fetch(`${config.apiUrl}/auth/register`,{
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -7,11 +9,12 @@ async function createUser(credentials){
         },
         body: JSON.stringify(credentials)
     })
-    .then(data => data.json())
+
+    return res;
 }
 
-const CUser_Post ={
+const Create_Post ={
     createUser,
 }
 
-export default CUser_Post;
+export default Create_Post;

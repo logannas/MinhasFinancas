@@ -1,7 +1,7 @@
 import {config} from "../config";
 
-function depositoUser(credentials, token){
-    const res = fetch(`${config.apiUrl}/deposito`,{
+function senhaUser(credentials, token){
+    const res = fetch(`${config.apiUrl}/auth/resetPassword`,{
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -10,11 +10,12 @@ function depositoUser(credentials, token){
         },
         body: JSON.stringify(credentials)
     })
+
     return res;
 }
 
-const Deposito_Post ={
-    depositoUser,
+const Senha_Post ={
+    senhaUser,
 }
 
-export default Deposito_Post;
+export default Senha_Post;

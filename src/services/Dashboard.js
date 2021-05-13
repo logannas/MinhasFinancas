@@ -1,7 +1,7 @@
 import {config} from "../config";
 
-function metasUser(token){
-    const res = fetch(`${config.apiUrl}/metas`,{
+function deshboardUser(token){
+    const res = fetch(`${config.apiUrl}/`,{
         method: 'GET',
         headers: {
             'Authorization': 'Bearer '+ token,
@@ -11,8 +11,8 @@ function metasUser(token){
     return res;
 }
 
-const Metas_Get ={
-    metasUser,
+const Deshboard_Post ={
+    deshboardUser,
 }
 
-export default Metas_Get;
+export default Deshboard_Post;
