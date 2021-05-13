@@ -1,3 +1,3 @@
 export const config = {
-    apiUrl: "http://localhost:3030"
+    apiUrl: "https://minhasfinancas-backend.herokuapp.com"
 }
