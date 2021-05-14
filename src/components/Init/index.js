@@ -42,16 +42,21 @@ export default function Init() {
             .then(function (result) {
                 var objGuardado = 0;
                 var objGasto = 0;
-                for (var obj in result.guardado) {
-                    objGuardado += result.guardado[obj].valor
+                if (result.error) {
+                    Swal.fire('erro', 'Não foi possível acessar os dados do seu usuário, tente novamente', 'error');
                 }
-                for (obj in result.gasto) {
-                    objGasto += result.gasto[obj].valor
+                else {
+                    for (var obj in result.guardado) {
+                        objGuardado += result.guardado[obj].valor
+                    }
+                    for (obj in result.gasto) {
+                        objGasto += result.gasto[obj].valor
+                    }
+                    var restante = (objGuardado - objGasto);
+                    setGuardado(objGuardado.toFixed(2));
+                    setGasto(objGasto.toFixed(2));
+                    setTotal(restante.toFixed(2));
                 }
-                var restante = (objGuardado - objGasto);
-                setGuardado(objGuardado.toFixed(2));
-                setGasto(objGasto.toFixed(2));
-                setTotal(restante.toFixed(2));
             }).catch(err => {
                 Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });

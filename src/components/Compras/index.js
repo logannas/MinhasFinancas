@@ -60,7 +60,7 @@ export default function Compras() {
         const res = ComprasUser.comprasUser(dataMerge, token);
         res.then(res => res.json())
             .then(function (result) {
-                if (result.message) {
+                if (result.error) {
                     Swal.fire('erro', result.message, 'error');
                 }
                 else {

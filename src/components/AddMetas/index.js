@@ -58,11 +58,11 @@ export default function AddMetas() {
         const res = AddMetasApi.addMetas(data, token);
         res.then(res => res.json())
             .then(function (result) {
-                if (result.message) {
+                if (result.error) {
                     Swal.fire('erro', result.message, 'error');
                 }
                 else {
-                    Swal.fire('sucesso', 'Compra adicionada com sucesso', 'success')
+                    Swal.fire('sucesso', 'Meta adicionada com sucesso', 'success')
                 }
             }).catch(err => {
                 Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');

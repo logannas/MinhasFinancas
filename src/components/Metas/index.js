@@ -57,10 +57,15 @@ export default function Metas() {
         res.then(res => res.json())
             .then(function (result) {
                 var teste = [];
-                for (var obj in result) {
-                    teste.push([result[obj].nome, result[obj].valor, result[obj].dataFinal, result[obj]._id]);
+                if (result.error) {
+                    Swal.fire('erro', 'Erro ao tentar acessar suas metas, tente novamente', 'error');
                 }
-                setNome(teste);
+                else {
+                    for (var obj in result) {
+                        teste.push([result[obj].nome, result[obj].valor, result[obj].dataFinal, result[obj]._id]);
+                    }
+                    setNome(teste);
+                }
             }).catch(err => {
                 Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
