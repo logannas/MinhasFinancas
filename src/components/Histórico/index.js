@@ -70,10 +70,15 @@ export default function Historico() {
         const res = Dashboard.deshboardUser(token);
         res.then(res => res.json())
             .then(function (result) {
-                setAlimentacao(result.alimentacao);
-                setTransporte(result.transporte);
-                setContas(result.contas);
-                setOutros(result.outros);
+                if (result.error) {
+                    Swal.fire('erro', 'Não foi possível acessar seu histórico, tente novamente', 'error');
+                }
+                else {
+                    setAlimentacao(result.alimentacao);
+                    setTransporte(result.transporte);
+                    setContas(result.contas);
+                    setOutros(result.outros);
+                }
             }).catch(err => {
                 Swal.fire('erro', 'erro interno do servidor, tente novamente', 'error');
             });
