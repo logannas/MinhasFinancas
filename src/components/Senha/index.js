@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     Box: {
         textAlign: "center",
         borderRadius: "20px",
-        marginTop: "%",
+        marginTop: "5%",
         width: "30%",
         height: "100%",
         color: "#ffffff",
