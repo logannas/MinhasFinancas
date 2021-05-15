@@ -1,4 +1,4 @@
-# Minhas Finanças API - PROJETO FINAL TRC3
+# Minhas Finanças Front-End - PROJETO FINAL TRC3
 
 ## Introduction
 
