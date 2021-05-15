@@ -1,3 +1,9 @@
+# Minhas Finanças API - PROJETO FINAL TRC3
+
+## Introduction
+
+O projeto Minhas Finanças API tem como objetivo auxiliar nas finanças pessoais, oferencendo ao usuário a possibilidade de saber a quantidade de dinheiro gasto e como o que esse dinheiro está sendo gasto, além de oferecer a possibilidade de criação de metas financeiras pessoais.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
